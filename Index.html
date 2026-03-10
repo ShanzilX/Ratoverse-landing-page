@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ratoverse Studio | Premium Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Matching the exact off-white from your logo background */
+            background-color: #F6F5F0; 
+            color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+            opacity: 0; /* Hidden for GSAP reveal */
+        }
+
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-btn {
+            background: transparent;
+            border: 2px solid #1A1A1A;
+            color: #1A1A1A;
+            padding: 0.75rem 2rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-btn:hover {
+            background: #1A1A1A;
+            color: #F6F5F0;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .huge-text {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 12vw, 10rem);
+            font-weight: 800;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -4px;
+        }
+
+        .word-wrapper {
+            overflow: hidden;
+            display: block;
+        }
+
+        .word {
+            display: inline-block;
+            transform: translateY(110%); /* Hidden below for GSAP */
+        }
+
+        .subtext {
+            margin-top: 2rem;
+            font-size: 1.25rem;
+            max-width: 500px;
+            opacity: 0; /* Hidden for GSAP */
+            font-weight: 400;
+            color: #4A4A4A;
+        }
+
+        /* Background Kinetic Circle */
+        .circle {
+            position: absolute;
+            width: 45vw;
+            height: 45vw;
+            border: 2px solid rgba(26, 26, 26, 0.05);
+            border-radius: 50%;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+        }
+        
+        .circle-inner {
+            position: absolute;
+            width: 30vw;
+            height: 30vw;
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-bar">
+        <div class="logo">Ratoverse Studio</div>
+        <button class="contact-btn">Let's Talk</button>
+    </nav>
+
+    <section class="hero">
+        <div class="circle"><div class="circle-inner"></div></div>
+        <h1 class="huge-text">
+            <span class="word-wrapper"><span class="word">We Build</span></span>
+            <span class="word-wrapper"><span class="word">Motion</span></span>
+        </h1>
+        <p class="subtext">The premier animation agency crafting insane kinetic experiences for the best brands on earth.</p>
+    </section>
+
+    <script>
+        // Wait for DOM to load
+        document.addEventListener("DOMContentLoaded", (event) => {
+            // GSAP Timeline for perfect synchronization
+            const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+            // 1. Expand the background circles
+            tl.to(".circle", { duration: 1.5, scale: 1, opacity: 1 }, "+=0.2")
+            
+            // 2. Reveal the massive text words from the bottom up
+            .to(".word", { duration: 1.2, y: "0%", stagger: 0.2 }, "-=1")
+            
+            // 3. Fade in the subtext and move it up slightly
+            .to(".subtext", { duration: 1, opacity: 1, y: -10 }, "-=0.8")
+            
+            // 4. Drop in the navigation bar
+            .to(".nav-bar", { duration: 1, opacity: 1, y: 10 }, "-=0.8");
+
+            // Add a slight parallax float effect to the massive text on mousemove
+            document.addEventListener("mousemove", (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                
+                gsap.to(".huge-text", {
+                    duration: 1,
+                    x: x,
+                    y: y,
+                    ease: "power2.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>
